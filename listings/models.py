@@ -5,6 +5,8 @@ from realtors.models import Owner
 class Listing(models.Model):
     owner = models.ForeignKey(Owner,on_delete=models.CASCADE)
     title = models.CharField(max_length=200,)
+    Choices = (('BHK','BHK'),('PG','PG'),('Single Room','Single Room'))
+    type = models.CharField(max_length=200,choices=Choices,null=True)
     address = models.TextField(blank=True)
     map_url = models.URLField(help_text = "GoogleMap location of the house.",blank=True)
 
