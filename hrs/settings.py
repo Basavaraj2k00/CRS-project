@@ -105,7 +105,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'hrsdb',
         'USER': 'postgres',
-        'PASSWORD': 'yr2327yr',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '5432'
     }
