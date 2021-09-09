@@ -12,3 +12,5 @@ class ListingAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Listing,ListingAdmin)
+
+#./venv/Scripts/activate 

@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock title %}</title>
+    <title>{% block title %}{% endblock title %} | CRS</title>
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{% static 'css/all.css' %}">
@@ -21,9 +21,8 @@
 <body>
     {% include 'topbar.html' %}
     {% include 'navbar.html' %}
-
     {% block content %}
-
+  
     {% endblock content %}
     <!-- Footer -->
     <footer id="main-footer" class="py-4 bg-primary text-white text-center">

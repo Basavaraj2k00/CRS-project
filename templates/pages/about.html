@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %}About{% endblock title %}
+{% block title %}About Us{% endblock title %}
 
 
 {% block content %}
@@ -8,7 +8,7 @@
   <div class="container">
     <div class="row text-center">
       <div class="col-md-12">
-        <h1 class="display-4">About BT Real Estate</h1>
+        <h1 class="display-4">About City Rental Services</h1>
         <p class="lead">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sunt, pariatur!</p>
       </div>
     </div>
@@ -103,13 +103,18 @@
           <i class="fas fa-award text-success mb-3"></i> Owner
         </p>
         <hr>
+        {% if request.user.is_authenticated %}
         <p>
           <i class="fas fa-phone"></i> {{ owner.phone}}
         </p>
         <p>
           <i class="fas fa-envelope-open"></i> {{ owner.email}}
         </p>
+        {% else %}
+        <p>Login to see owner contact details</p>
+        {% endif %}
       </div>
+
       {% endfor %}
       {% endif %}
     </div>

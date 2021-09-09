@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load humanize %}
 {% block title %}
-{{listing.title}} | Listing
+{{listing.title}}
 {% endblock title %}
 
 {% block content %}
@@ -33,7 +33,8 @@
         </nav>
     </div>
 </section>
-
+<!-- alerts -->
+{% include 'alert.html' %}
 <!-- Listing -->
 <section id="listing" class="py-4">
     <div class="container">
@@ -101,10 +102,12 @@
                                 <i class="fas fa-bed"></i> Bedrooms:
                                 <span class="float-right">{{listing.bedrooms}}</span>
                             </li>
+                            {% if request.user.is_authenticated %}
                             <li class="list-group-item text-dark">
                                 <i class="fas fa-user"></i> Owner:
                                 <span class="float-right">{{listing.owner.name}}</span>
                             </li>
+                             {% endif %}
 
                         </ul>
                     </div>
@@ -118,11 +121,12 @@
                                 <i class="fas fa-bath"></i> Bathrooms:
                                 <span class="float-right">{{listing.bathrooms}}</span>
                             </li>
+                            {% if request.user.is_authenticated %}
                             <li class="list-group-item text-dark">
                                 <i class="fas fa-phone"></i> Contact:
                                 <span class="float-right">{{listing.owner.phone}}</span>
                             </li>
-                           
+                           {% endif %}
                         </ul>
                     </div>
                 </div>
@@ -130,7 +134,15 @@
 
                     <div class="col-md-12">
                         <h3>Address</h3>
-                        {{listing.address}}
+                        {% if request.user.is_authenticated %} 
+                        <address>
+                            {{listing.address}}
+                        </address>
+                        {% else %}
+                        <p>Please Login to view the address</p>
+                        {% endif %}
+                       
+                        
                     </div>
                 </div>
 
@@ -151,8 +163,15 @@
                         <h6 class="text-dark">{{listing.owner.name}}</h6>
                     </div>
                 </div>
-                <button class="btn-primary btn-block btn-lg" data-toggle="modal" data-target="#inquiryModal">Make An
+                {% if request.user.is_authenticated %}
+                <button class="btn-primary btn-block btn-lg"  data-toggle="modal" data-target="#inquiryModal">Make An
                     Inquiry</button>
+                    {% else %}
+                    <a href="{% url 'login' %}" style="text-decoration: none;color:white;" >
+                  <button class="btn-primary btn-block btn-lg" style="cursor:pointer;">Login To Make An
+                    Inquiry</button></a>
+               
+                    {% endif %}
             </div>
         </div>
     </div>
@@ -163,36 +182,52 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
+                
                 <h5 class="modal-title" id="inquiryModalLabel">Make An Inquiry</h5>
                 <button type="button" class="close" data-dismiss="modal">
                     <span>&times;</span>
                 </button>
+          
+               
             </div>
             <div class="modal-body">
-                <form>
+                <form action="{% url 'contact' %}" method="POST">
+                    {% csrf_token %}
+                    {% if request.user.is_authenticated %}
+                    <input type="hidden" name="user_id" value="{{user.id}}">
+                    <input type="hidden" name="owner_email" value="{{listing.owner.email}}"> 
+                    <input type="hidden" name="owner_name" value="{{listing.owner.name}}">  
+
+                    <input type="hidden" name="listing_id" value="{{listing.id}}">  
+                    <input type="hidden" name="username" value="{{request.user.first_name}} {{request.user.last_name}}">  
+
+
                     <div class="form-group">
                         <label for="property_name" class="col-form-label">Property:</label>
-                        <input type="text" name="listing" class="form-control" value="{{listing.title}}" disabled>
+                        <input type="text" name="listing" class="form-control" value="{{listing.title}}" required>
                     </div>
                     <div class="form-group">
                         <label for="name" class="col-form-label">Name:</label>
-                        <input type="text" name="name" class="form-control" required>
+                       
+                        <input type="text" name="name" value="{{user.first_name}} {{user.last_name}}" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <label for="email" class="col-form-label">Email:</label>
-                        <input type="email" name="email" class="form-control" required>
+                        <input type="email" name="email" class="form-control" value="{{user.email}}" required>
                     </div>
                     <div class="form-group">
                         <label for="phone" class="col-form-label">Phone:</label>
-                        <input type="text" name="phone" class="form-control">
+                        <input type="text" name="phone" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <label for="message" class="col-form-label">Message:</label>
-                        <textarea name="message" class="form-control"></textarea>
+                        <textarea name="message" class="form-control" required></textarea>
                     </div>
                     <hr>
+                   
                     <input type="submit" value="Send" class="btn btn-block btn-secondary">
-                </form>
+                    {% endif %}
+                     </form>
             </div>
         </div>
     </div>
