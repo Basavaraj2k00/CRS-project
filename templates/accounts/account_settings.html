@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %} User Dashboard{% endblock title %}
+
+
+{% block content %}
+<style>
+    .profile-pic {
+        max-width: 90%;
+        width: 250px;
+        height: 200px;
+        max-height: 200px;
+        margin: 0 auto;
+        border-radius: 20%;
+    }
+</style>
+
+<section id="showcase-inner" class="py-5 text-white">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-12">
+               
+                {% if not user.is_authenticated %}
+                <h1 class="display-4" style="height: 15vh;">You must login to see the dashboard</h1>
+                {% else %}
+
+                <h1 class="display-4">Welcome {{user.first_name}} {{user.last_name}}</h1>
+                <!-- <p class="lead">Manage your City Rental Services account</p> -->
+                <p class="lead">Here are the property listings that you have inquired about</p>
+
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</section>
+
+<!-- Breadcrumb -->
+<section id="bc" class="mt-3">
+    <div class="container">
+        <ul class="nav nav-pills nav-fill mb-3" id="ex1" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active" id="ex2-tab-1" data-mdb-toggle="pill" href="#ex2-pills-1" role="tab"
+                    aria-controls="ex2-pills-1" aria-selected="true">Link</a>
+            </li>
+        
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="ex2-tab-3" data-mdb-toggle="pill" href="#ex2-pills-3" role="tab"
+                    aria-controls="ex2-pills-3" aria-selected="false">Another link</a>
+            </li>
+        </ul>
+    </div>
+</section>
+{% include "alert.html" %}
+
+<section id="dashboard" class="py-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card card-body">
+                    <hr>
+                    <h3 style="text-align: center">Account Settings</h3>
+                    <hr>
+                    {% if request.user.owner.photo %}
+                    <img class="profile-pic" src="{{request.user.owner.photo.url}}">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="card card-body">
+
+                    {% load crispy_forms_tags %}
+                    <form method="POST" action="" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{form.as_p }}
+
+                        <input class="btn btn-primary" type="submit" name="Update Information">
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{% endblock content %}

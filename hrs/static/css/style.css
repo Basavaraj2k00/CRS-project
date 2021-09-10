@@ -73,6 +73,7 @@ img {
 .listing-preview a {
   position: relative; }
 
+
 @media (max-width: 991px) {
   #showcase {
     padding-top: 4rem; }
