@@ -54,7 +54,11 @@
 
       <div class="col-md-4">
         <div class="card">
-          <img class="card-img-top" src="{{mvp.photo.url}}" alt="Seller of the month" height="250">
+          {% if mvp.photo %}
+            <img class="card-img-top" src="{{mvp.photo.url}}" alt="Seller of the month" height="250">
+          {% else %}
+          <h2>No Photo available</h2>
+          {% endif %}
           <div class="card-body">
             <h5 class="card-title">Owner Of The Month</h5>
             <h6 class="text-dark">{{mvp.name}}</h6>

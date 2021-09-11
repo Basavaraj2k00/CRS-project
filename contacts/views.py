@@ -37,7 +37,7 @@ def contact(request):
         try:
             send_mail(
                 'House Listing Inquiry',
-                f'\nGreetings from CITY RENTAL SERVICES\n\n\nThere has been an inquiry for {listing} from {user_name} & We request you to get back to them as soon as possible!.\n\nTheir message:\n {message}\n\nThier contact details are:\n\nEmail: {email}\nPhone: {phone}\n\n\nThank You.\n',
+                f'\nGreetings from CITY RENTAL SERVICES\n\n\nThere has been an inquiry for "{listing}" from "{user_name}" & We request you to get back to them as soon as possible!.\n\nTheir message:\n {message}\n\nThier contact details are:\n\nEmail: {email}\nPhone: {phone}\n\n\nThank You.\n',
                 'contactcityrentalservices@gmail.com',
                 [owner_email, 'yr2327yr@gmail.com'],
                 fail_silently=False

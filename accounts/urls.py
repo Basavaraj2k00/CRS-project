@@ -10,6 +10,8 @@ urlpatterns = [
 
     path("dashboard", views.dashboard_page, name="dashboard"),
     path("profile", views.account_settings, name="profile"),
+    path("add_listing", views.add_listing, name="add_listing"),
+
 
 
 

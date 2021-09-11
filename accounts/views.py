@@ -3,9 +3,10 @@ from django.contrib import messages
 from django.contrib.auth.models import User, auth
 from django.contrib.auth.models import Group
 from contacts.models import Contact
-
+from realtors.models import Owner
+from listings.models import Listing
 from .decorators import allowed_users
-from .forms import OwnerForm
+from .forms import OwnerForm, ListingForm
 # Create your views here.
 
 
@@ -101,13 +102,20 @@ def dashboard_page(request):
 
 @allowed_users(allowed_roles=['owner'])
 def account_settings(request):
+  
+
     owner_info = request.user.owner
+    
     form = OwnerForm(instance=owner_info)
+    
     if request.method == 'POST':
         form = OwnerForm(request.POST, request.FILES,instance=owner_info)
         if form.is_valid():
             form.save()
-
+        else:
+            messages.error(
+                    request, f"Something went wrong!. Please try again later, or contact us.")
+  
     context = {
         'form': form
 
@@ -116,8 +124,31 @@ def account_settings(request):
 
 
 
+@allowed_users(allowed_roles=['owner'])
+def add_listing(request):
+    owner = request.user.owner
+    listing_form = ListingForm(instance=owner)
+    
+    if request.method == 'POST':
+        listing_form = ListingForm(request.POST, request.FILES,instance=owner)
+        if listing_form.is_valid():
+            listing_form.save()
+        else:
+            messages.error(
+                    request, f"Something went wrong!. Please try again later, or contact us.")
+
+
+    context = {
+        'form': listing_form
+
+    }
+    return render(request,'accounts/add_listing.html', context)
+
 def logout_page(request):
     auth.logout(request)
     messages.success(request, f"You have been logged out!.")
 
     return redirect('login')
+
+
+# .\venv\Scripts\activate
