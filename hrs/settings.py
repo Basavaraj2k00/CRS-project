@@ -110,7 +110,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'hrsdb',
         'USER': 'postgres',
-        'PASSWORD': 'yr2327yr',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '5432'
     }
@@ -177,6 +177,6 @@ MESSAGE_TAGS = {
 # EMAIL config
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = "contactcityrentalservices@gmail.com"
-EMAIL_HOST_PASSWORD = "2k00@2k00@2k00@"
+EMAIL_HOST_USER = ""
+EMAIL_HOST_PASSWORD = ""
 EMAIL_USE_TLS = True
